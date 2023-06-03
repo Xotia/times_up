@@ -558,23 +558,54 @@ class Manche1 extends StatelessWidget {
           ),
           SizedBox(height: 10),
           BigCard(pair: pair),
-          SizedBox(height: 10),
+          SizedBox(height: 50),
           Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              ElevatedButton(
-                onPressed: () {
-                  appState.toggleFavorite();
-                  appState.getNext();
-                },
-                child: Text('Suivant'),
+              SizedBox(width: 20),
+              Expanded(
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    padding: EdgeInsets.zero, // Supprimer le padding par défaut
+                    backgroundColor: Color(0xFF99CC99),
+                    minimumSize: Size(
+                        double.infinity, 300), // Définir la hauteur du bouton
+                  ),
+                  onPressed: () {
+                    appState.toggleFavorite();
+                    appState.getNext();
+                  },
+                  child: Text(
+                    'Suivant',
+                    style: TextStyle(
+                      color: Colors
+                          .white, // Couleur du texte en blanc pour le bouton "Suivant"
+                    ),
+                  ),
+                ),
               ),
-              ElevatedButton(
-                onPressed: () {
-                  appState.getNext();
-                },
-                child: Text('Passer'),
+              SizedBox(width: 20),
+              Expanded(
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    padding: EdgeInsets.zero, // Supprimer le padding par défaut
+                    backgroundColor: Color(0xFFFF6666),
+                    minimumSize: Size(
+                        double.infinity, 300), // Définir la hauteur du bouton
+                  ),
+                  onPressed: () {
+                    appState.getNext();
+                  },
+                  child: Text(
+                    'Passer',
+                    style: TextStyle(
+                      color: Colors
+                          .white, // Couleur du texte en blanc pour le bouton "Passer"
+                    ),
+                  ),
+                ),
               ),
+              SizedBox(width: 20),
             ],
           ),
           Spacer(flex: 2),

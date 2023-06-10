@@ -28,6 +28,87 @@ class MyApp extends StatelessWidget {
 class MyAppState extends ChangeNotifier {
   final _random = Random();
   List<String> _words = [
+    'Harry Potter',
+    'Sherlock Holmes',
+    'Luke Skywalker',
+    'James Bond',
+    'Wonder Woman',
+    'Spider-Man',
+    'Batman',
+    'Superman',
+    'Captain America',
+    'Hermione Granger',
+    'Katniss Everdeen',
+    'Lara Croft',
+    'Darth Vader',
+    'Iron Man',
+    'Gandalf',
+    'Black Widow',
+    'Thor',
+    'Captain Jack Sparrow',
+    'The Joker',
+    'Arya Stark',
+    'Jon Snow',
+    'Black Panther',
+    'Mulan',
+    'Elsa',
+    'Alice (Alice au pays des merveilles)',
+    'Neo (de Matrix)',
+    'Rocky Balboa',
+    'Tony Stark',
+    'Shrek',
+    'Frozone',
+    'Katara (Avatar: The Last Airbender)',
+    'Daenerys Targaryen',
+    'Aragorn',
+    'Ellen Ripley (Alien)',
+    'Indiana Jones',
+    'Wolverine',
+    'Frodo Baggins',
+    'Bilbo Baggins',
+    'Mickey Mouse',
+    'Minnie Mouse',
+    'Donald Duck',
+    'Pluto',
+    'Simba (Le Roi Lion)',
+    'Belle (La Belle et la Bête)',
+    'Ariel (La Petite Sirène)',
+    'Aladdin',
+    'Jasmine (Aladdin)',
+    'Pocahontas',
+    'Mulan',
+    'Elsa (La Reine des Neiges)',
+    'Anna (La Reine des Neiges)',
+    'Olaf (La Reine des Neiges)',
+    'Woody (Toy Story)',
+    'Buzz l eclair (Toy Story)',
+    'Dory (Le Monde de Nemo)',
+    'Jack Sparrow (Pirates des Caraïbes)',
+    'Malefique(La Belle au Bois Dormant)',
+    'Cendrillon',
+    'Blanche-Neige',
+    'Mowgli (Le Livre de la Jungle)',
+    'Baloo (Le Livre de la Jungle)',
+    'Stitch (Lilo & Stitch)',
+    'Tiana (La Princesse et la Grenouille)',
+    'Rapunzel (Raiponce)',
+    'Flynn Rider (Raiponce)',
+    'Merida ( Rebelle)',
+    'Peter Pan',
+    'Tinker Bell (La Fée Clochette)',
+    'Hercule',
+    'Megara (Hercule)',
+    'Tarzan',
+    'Jane Porter (Tarzan)',
+    'Mushu (Mulan)',
+    'Maui (Vaiana)',
+    'Vaiana',
+    'Lilo (Lilo & Stitch)',
+    'Nemo (Le Monde de Nemo)',
+    'Marlin (Le Monde de Nemo)',
+    'Gaston (La Belle et la Bête)',
+    'Jafar (Aladdin)',
+    'Hades (Hercule)',
     'Livre',
     'Chaise',
     'Table',
@@ -352,6 +433,18 @@ class MyAppState extends ChangeNotifier {
     animatedList?.insertItem(0);
     current = _words[_random.nextInt(_words.length)];
     notifyListeners();
+    if (favorites.contains(current)) {
+      getNext();
+    }
+  }
+
+  void resetGame() {
+    history.clear();
+    favorites.clear();
+    manche_2.clear();
+    manche_3.clear();
+    current = '';
+    notifyListeners();
   }
 
   void getNextSavedWord2() {
@@ -552,11 +645,11 @@ class Manche1 extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Expanded(
-            flex: 3,
-            child: HistoryListView(),
-          ),
-          SizedBox(height: 10),
+          // Expanded(
+          //   flex: 7,
+          //   child: HistoryListView(),
+          // ),
+          SizedBox(height: 200),
           BigCard(pair: pair),
           SizedBox(height: 50),
           Row(
@@ -569,7 +662,7 @@ class Manche1 extends StatelessWidget {
                     padding: EdgeInsets.zero, // Supprimer le padding par défaut
                     backgroundColor: Color(0xFF99CC99),
                     minimumSize: Size(
-                        double.infinity, 300), // Définir la hauteur du bouton
+                        double.infinity, 150), // Définir la hauteur du bouton
                   ),
                   onPressed: () {
                     appState.toggleFavorite();
@@ -578,8 +671,15 @@ class Manche1 extends StatelessWidget {
                   child: Text(
                     'Suivant',
                     style: TextStyle(
-                      color: Colors
-                          .white, // Couleur du texte en blanc pour le bouton "Suivant"
+                      color: Colors.white,
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.bold,
+                      shadows: [
+                        Shadow(
+                          color: Colors.black, // Couleur du contour noir
+                          blurRadius: 2.0, // Flou du contour
+                        ),
+                      ],
                     ),
                   ),
                 ),
@@ -591,7 +691,7 @@ class Manche1 extends StatelessWidget {
                     padding: EdgeInsets.zero, // Supprimer le padding par défaut
                     backgroundColor: Color(0xFFFF6666),
                     minimumSize: Size(
-                        double.infinity, 300), // Définir la hauteur du bouton
+                        double.infinity, 150), // Définir la hauteur du bouton
                   ),
                   onPressed: () {
                     appState.getNext();
@@ -599,8 +699,15 @@ class Manche1 extends StatelessWidget {
                   child: Text(
                     'Passer',
                     style: TextStyle(
-                      color: Colors
-                          .white, // Couleur du texte en blanc pour le bouton "Passer"
+                      color: Colors.white,
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.bold,
+                      shadows: [
+                        Shadow(
+                          color: Colors.black, // Couleur du contour noir
+                          blurRadius: 2.0, // Flou du contour
+                        ),
+                      ],
                     ),
                   ),
                 ),
@@ -626,23 +733,67 @@ class Manche2 extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           BigCard(pair: pair),
-          SizedBox(height: 10),
+          SizedBox(height: 50),
           Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              ElevatedButton(
-                onPressed: () {
-                  appState.getNextSavedWord2();
-                },
-                child: Text('Suivant'),
+              SizedBox(width: 20),
+              Expanded(
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    padding: EdgeInsets.zero, // Supprimer le padding par défaut
+                    backgroundColor: Color(0xFF99CC99),
+                    minimumSize: Size(
+                        double.infinity, 150), // Définir la hauteur du bouton
+                  ),
+                  onPressed: () {
+                    appState.getNextSavedWord2();
+                  },
+                  child: Text(
+                    'Suivant',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.bold,
+                      shadows: [
+                        Shadow(
+                          color: Colors.black, // Couleur du contour noir
+                          blurRadius: 2.0, // Flou du contour
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
               ),
-              SizedBox(width: 10),
-              ElevatedButton(
-                onPressed: () {
-                  appState.passer2();
-                },
-                child: Text('Passer'),
+              SizedBox(width: 20),
+              Expanded(
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    padding: EdgeInsets.zero, // Supprimer le padding par défaut
+                    backgroundColor: Color(0xFFFF6666),
+                    minimumSize: Size(
+                        double.infinity, 150), // Définir la hauteur du bouton
+                  ),
+                  onPressed: () {
+                    appState.passer2();
+                  },
+                  child: Text(
+                    'Passer',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.bold,
+                      shadows: [
+                        Shadow(
+                          color: Colors.black, // Couleur du contour noir
+                          blurRadius: 2.0, // Flou du contour
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
               ),
+              SizedBox(width: 20),
             ],
           ),
           //Spacer(flex: 2),
@@ -663,23 +814,67 @@ class Manche3 extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           BigCard(pair: pair),
-          SizedBox(height: 10),
+          SizedBox(height: 50),
           Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              ElevatedButton(
-                onPressed: () {
-                  appState.getNextSavedWord3();
-                },
-                child: Text('Suivant'),
+              SizedBox(width: 20),
+              Expanded(
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    padding: EdgeInsets.zero, // Supprimer le padding par défaut
+                    backgroundColor: Color(0xFF99CC99),
+                    minimumSize: Size(
+                        double.infinity, 150), // Définir la hauteur du bouton
+                  ),
+                  onPressed: () {
+                    appState.getNextSavedWord3();
+                  },
+                  child: Text(
+                    'Suivant',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.bold,
+                      shadows: [
+                        Shadow(
+                          color: Colors.black, // Couleur du contour noir
+                          blurRadius: 2.0, // Flou du contour
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
               ),
-              SizedBox(width: 10),
-              ElevatedButton(
-                onPressed: () {
-                  appState.passer3();
-                },
-                child: Text('Passer'),
+              SizedBox(width: 20),
+              Expanded(
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    padding: EdgeInsets.zero, // Supprimer le padding par défaut
+                    backgroundColor: Color(0xFFFF6666),
+                    minimumSize: Size(
+                        double.infinity, 150), // Définir la hauteur du bouton
+                  ),
+                  onPressed: () {
+                    appState.passer3();
+                  },
+                  child: Text(
+                    'Passer',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.bold,
+                      shadows: [
+                        Shadow(
+                          color: Colors.black, // Couleur du contour noir
+                          blurRadius: 2.0, // Flou du contour
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
               ),
+              SizedBox(width: 20),
             ],
           ),
           //Spacer(flex: 2),
@@ -704,6 +899,20 @@ class FavoritesPage extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        SizedBox(height: 40),
+        ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            padding: EdgeInsets.zero, // Supprimer le padding par défaut
+            backgroundColor: Color.fromARGB(255, 175, 179, 175),
+            minimumSize:
+                Size(double.infinity, 50), // Définir la hauteur du bouton
+          ),
+          onPressed: () {
+            appState.resetGame();
+          },
+          child: Text('Réinitialiser le jeu'),
+        ),
+        SizedBox(width: 20),
         Padding(
           padding: const EdgeInsets.all(30),
           child: Text('Il y a '
